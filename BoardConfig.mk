@@ -95,7 +95,6 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 TARGET_NEEDS_BIONIC_MD5 := true
 
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
-TARGET_RECOVERY_UI_LIB := librecovery_ui_tuna
 
 # device-specific extensions to the updater binary
 # inexplicable build errors with Lollipop...
