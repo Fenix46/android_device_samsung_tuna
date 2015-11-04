@@ -36,7 +36,9 @@ PRODUCT_PACKAGES = \
 	sensors.tuna \
 	libinvensense_mpl \
 	nfc.tuna \
+	libpn544_fw \
 	power.tuna
+
 
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be
