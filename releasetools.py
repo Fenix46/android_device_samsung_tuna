@@ -154,6 +154,16 @@ def WriteRadioCdma(info, radio_cdma_img):
     package_extract_file("radio-cdma.img")));''')
 
 def TunaVariantSetup(info):
+  # /system should be mounted when FullOTA_InstallEnd is fired off...
+  # ...except for block-based packages. Blah! Problem is, I don't think
+  # we can determine that from info :/ do it by hand.
+  # thankfully, we can at least get the mount options.
+  recovery_mount_options = info.info_dict.get("recovery_mount_options")
+
+  # we need to make sure we're not already mounted however, for some reason.
+  info.script.AppendExtra('ifelse(is_mounted("/system"), unmount("/system"));')
+  info.script.Mount("/system", recovery_mount_options)
+
   info.script.AppendExtra('ui_print("device variant: " + tuna.get_variant());')
 
   info.script.AppendExtra('''if (tuna.get_variant() == "maguro") then (
