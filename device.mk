@@ -55,7 +55,8 @@ PRODUCT_PACKAGES += \
 
 # RIL
 PRODUCT_PACKAGES += \
-	libsecril-client
+	libsecril-client \
+	libsecril-compat
 
 ifeq ($(TARGET_TUNA_AUDIO_HDMI),true)
 PRODUCT_COPY_FILES += \
