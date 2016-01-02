@@ -89,7 +89,9 @@ PRODUCT_COPY_FILES += \
 	device/samsung/tuna/ueventd.tuna.rc:root/ueventd.tuna.rc \
 	device/samsung/tuna/media_profiles.xml:system/etc/media_profiles.xml \
 	device/samsung/tuna/media_codecs.xml:system/etc/media_codecs.xml \
-	device/samsung/tuna/gps.conf:system/etc/gps.conf
+
+# GPS
+$(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 # Wifi
 ifneq ($(TARGET_PREBUILT_WIFI_MODULE),)
