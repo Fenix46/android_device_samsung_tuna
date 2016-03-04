@@ -238,3 +238,5 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 $(call inherit-product-if-exists, vendor/samsung/tuna/device-vendor.mk)
+
+$(call inherit-product-if-exists, vendor/ti/omap4/omap4-vendor.mk)
