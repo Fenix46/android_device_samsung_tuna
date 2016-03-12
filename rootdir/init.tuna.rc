@@ -28,11 +28,6 @@ on init
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
 
-    mkdir /data/smc 0770 drmrpc drmrpc
-    chown drmrpc drmrpc /data/smc/counter.bin
-    chown drmrpc drmrpc /data/smc/storage.bin
-    chown drmrpc drmrpc /data/smc/system.bin
-
     # camera calibration
     mkdir /data/misc/camera 0770 media media
     mkdir /data/misc/camera/R5_MVEN003_LD2_ND0_IR0_SH0_FL1_SVEN003_DCCID1044 0770 media media
@@ -67,7 +62,10 @@ on boot
 
 on fs
     mkdir /factory 0775 radio radio
+    mkdir /misc 0770 drmrpc drmrpc
     mount_all /fstab.tuna
+    start misc_fs_setup
+    start smc_pa_wvdrm
     start tuna_setup
     restorecon /dev/block/platform/omap/omap_hsmmc.0/by-name/radio
     restorecon_recursive /factory
@@ -163,7 +161,7 @@ service setup_fs /system/bin/setup_fs \
 
 service tf_daemon /system/bin/tf_daemon \
         -d -c /vendor/etc/smc_normal_world_android_cfg.ini
-        class main
+        class core
         user drmrpc
         group drmrpc
 
@@ -265,6 +263,13 @@ service battery_charger /sbin/healthd -c
     class charger
     critical
     seclabel u:r:healthd:s0
+
+service misc_fs_setup /system/vendor/bin/misc-fs-setup.sh
+    class core
+    user root
+    group root
+    disabled
+    oneshot
 
 service tuna_setup /system/vendor/bin/tunasetup.sh
     class main
