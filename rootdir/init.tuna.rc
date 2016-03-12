@@ -67,9 +67,7 @@ on fs
     start misc_fs_setup
     start smc_pa_wvdrm
     start tuna_setup
-    restorecon /dev/block/platform/omap/omap_hsmmc.0/by-name/radio
-    restorecon_recursive /factory
-    mount ext4 /dev/block/platform/omap/omap_hsmmc.0/by-name/efs /factory ro remount
+    restorecon /dev/block/platform/omap/omap_hsmmc.0/by-name/radiot
     setprop ro.crypto.fuse_sdcard true
 
     # change permissions for mtd device

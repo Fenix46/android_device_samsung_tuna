@@ -106,6 +106,11 @@ else
     delete_torocommon_files
 fi
 
+# Perform one-time security context correction for /factory
+mount -o remount,rw /factory
+restorecon -R /factory
+mount -o remount,ro /factory
+
 # Now that we've finished our job, remount system ro and reboot
 mount -o remount,ro /system
 reboot
