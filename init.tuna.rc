@@ -35,11 +35,6 @@ on post-fs-data
 	write /sys/kernel/mm/ksm/sleep_millisecs 500
 	write /sys/kernel/mm/ksm/run 1
 
-	mkdir /data/smc 0770 drmrpc drmrpc
-	chown drmrpc drmrpc /data/smc/counter.bin
-	chown drmrpc drmrpc /data/smc/storage.bin
-	chown drmrpc drmrpc /data/smc/system.bin
-
 	# symlink egl.cfg
 	symlink /sys/egl/egl.cfg /system/lib/egl/egl.cfg
 
@@ -90,6 +85,7 @@ on boot
 
 on fs
 	mkdir /factory 0775 radio radio
+        mkdir /tee 0770 drmrpc drmrpc
 	mount_all /fstab.tuna
 	restorecon /dev/block/platform/omap/omap_hsmmc.0/by-name/radio
 	mount ext4 /dev/block/platform/omap/omap_hsmmc.0/by-name/efs /factory rw remount
@@ -107,6 +103,8 @@ on fs
 	restorecon /factory/bluetooth/bt_addr
 	mount ext4 /dev/block/platform/omap/omap_hsmmc.0/by-name/efs /factory ro remount
 	setprop ro.crypto.fuse_sdcard true
+
+        start tee_fs_setup 
 
 # change permissions for mtd device
 	chmod 0660 /dev/mtd/mtd0
@@ -200,7 +198,7 @@ service setup_fs /system/bin/setup_fs \
 
 service tf_daemon /system/bin/tf_daemon \
 	-d -c /vendor/etc/smc_normal_world_android_cfg.ini
-	class main
+	class core
 	user drmrpc
 	group drmrpc
 
@@ -302,3 +300,14 @@ service battery_charger /sbin/healthd -c
 	class charger
 	critical
 	seclabel u:r:healthd:s0
+
+service tee_fs_setup /system/vendor/bin/tee-fs-setup.sh
+        class core
+        user root
+        group root
+        disabled
+        oneshot
+
+on property:init.tee_fs.ready=true
+        start smc_pa_wvdrm
+        start tf_daemon

@@ -78,9 +78,14 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_PACKAGES += \
 	tuna_hdcp_keys
 
+# SMC
 PRODUCT_PACKAGES += \
 	keystore.tuna
 
+ PRODUCT_COPY_FILES += \
+	$(DEVICE_FOLDER)/tee-fs-setup.sh:system/vendor/bin/tee-fs-setup.sh
+
+# Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/init.tuna.rc:root/init.tuna.rc \
 	device/samsung/tuna/init.tuna.usb.rc:root/init.tuna.usb.rc \
