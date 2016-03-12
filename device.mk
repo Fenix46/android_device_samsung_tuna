@@ -78,8 +78,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_PACKAGES += \
 	tuna_hdcp_keys
 
-#PRODUCT_PACKAGES += \
-#	keystore.tuna
+PRODUCT_PACKAGES += \
+	keystore.tuna
 
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/init.tuna.rc:root/init.tuna.rc \
