@@ -1,4 +1,8 @@
 # servicemanager
+<<<<<<< HEAD
 
 allow servicemanager zygote:file { read open };
 
+=======
+allow servicemanager zygote:file { read open };
+>>>>>>> 3977f65... Implemented SELinux rules for tuna.
