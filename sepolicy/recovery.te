@@ -1,0 +1,37 @@
+# recovery
+type recovery_exec, exec_type, file_type;
+init_daemon_domain(recovery)
+
+# For running tunasetup
+allow recovery shell_exec:file read;
+
+# For misc_fs setprop
+allow recovery property_socket:sock_file write;
+allow recovery init:unix_stream_socket connectto;
+allow recovery misc_fs_prop:property_service set;
+
+# For moving files in tunasetup
+allow recovery system_file:dir { write rename add_name remove_name unlink };
+allow recovery system_file:file { rename };
+
+# For creating /misc
+allow recovery tee_block_device:blk_file { getattr read open ioctl write };
+allow recovery unlabeled:dir { write add_name create getattr setattr };
+allow recovery recovery:capability { fowner chown dac_override };
+allow recovery kmsg_device:chr_file { open write };
+allow recovery tee:dir { getattr };
+
+# For running mke2fs when creating misc
+allow recovery system_file:file execute_no_trans;
+
+# For remounting and relabeling /factory and /system
+allow recovery efs_block_device:blk_file { getattr read open ioctl write };
+allow recovery system_block_device:blk_file { open read ioctl };
+allow recovery labeledfs:filesystem { mount remount };
+allow recovery kernel:process setsched;
+allow recovery rootfs:dir mounton;
+allow recovery { efs_file radio_efs_file bluetooth_efs_file }:dir { getattr open read search setattr };
+allow recovery { efs_file radio_efs_file bluetooth_efs_file }:file { getattr open read setattr relabelfrom relabelto };
+
+# For rebooting in tunasetup
+allow recovery powerctl_prop:property_service set;

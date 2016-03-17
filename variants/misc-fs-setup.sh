@@ -8,7 +8,7 @@ log_to_kernel() {
 
 create_misc_fs() {
     /system/bin/mke2fs -b 4096 ${DEVICE} || exit 1
-    /system/bin/mount -t ext4 -o discard,nodev,noatime,nosuid,nomblk_io_submit ${DEVICE} /misc || exit 1
+    /system/bin/mount -t ext4 -o discard,nodev,noatime,nosuid,noexec,nomblk_io_submit ${DEVICE} /misc || exit 1
     mkdir /misc/smc || exit 1
     chmod 0770 /misc/smc || exit 1
     chown drmrpc:drmrpc /misc/smc || exit 1
@@ -21,6 +21,7 @@ if [ ! -e /misc/smc ]; then
   if [ "${ACTUAL_HASH}" == "${EXPECTED_HASH}  ${DEVICE}" ]; then
     if create_misc_fs > /dev/kmsg 2>&1; then
       log_to_kernel "misc-fs-setup: successfully initialized /misc for SMC."
+      /system/bin/setprop init.misc_fs.ready true
     else
       log_to_kernel "misc-fs-setup: initialization of /misc for SMC failed. SMC won't function!"
     fi
@@ -29,6 +30,7 @@ if [ ! -e /misc/smc ]; then
   fi
 else
   log_to_kernel "misc-fs-setup: /misc is already initialized for SMC, nothing to do."
+  /system/bin/setprop init.misc_fs.ready true
 fi
 
 exit 0

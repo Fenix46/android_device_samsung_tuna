@@ -1,2 +1,4 @@
 # system_server
-allow system_server default_prop:property_service { set };
+
+# Needed for /system/vendor/lib/hw/gps.omap4.so
+allow system_server system_file:file { execmod };
