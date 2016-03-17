@@ -5,3 +5,4 @@ init_daemon_domain(fs_setup)
 
 allow fs_setup cache_block_device:blk_file rw_file_perms;
 allow fs_setup userdata_block_device:blk_file rw_file_perms;
+allow fs_setup block_device:dir search;

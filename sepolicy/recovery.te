@@ -14,9 +14,10 @@ allow recovery misc_fs_prop:property_service set;
 allow recovery system_file:dir { write rename add_name remove_name unlink };
 allow recovery system_file:file { rename };
 
-# For creating /misc
+# For creating or checking /misc
 allow recovery tee_block_device:blk_file { getattr read open ioctl write };
-allow recovery unlabeled:dir { write add_name create getattr setattr };
+allow recovery unlabeled:dir { write add_name create getattr setattr search };
+allow recovery block_device:dir { search };
 allow recovery recovery:capability { fowner chown dac_override };
 allow recovery kmsg_device:chr_file { open write };
 allow recovery tee:dir { getattr };
