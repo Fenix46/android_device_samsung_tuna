@@ -40,9 +40,9 @@
 /system/bin/dumpdcc		u:object_r:dumpdcc_exec:s0
 
 # TEE / SMC
-/misc/smc(/.*)?						u:object_r:tee_file:s0
+/tee/smc(/.*)?						u:object_r:tee_file:s0
 /dev/tf_ctrl						u:object_r:tee_device:s0
-/system/vendor/bin/misc-fs-setup.sh			u:object_r:recovery_exec:s0
+/system/vendor/bin/tee-fs-setup.sh			u:object_r:recovery_exec:s0
 /system/bin/smc_pa_ctrl					u:object_r:smc_pa_ctrl_exec:s0
 
 # Tuna & generic setup
@@ -58,5 +58,5 @@
 /dev/block/platform/omap/omap_hsmmc.0/by-name/userdata	u:object_r:userdata_block_device:s0
 /dev/block/platform/omap/omap_hsmmc.0/by-name/param	u:object_r:radio_device:s0
 /dev/block/platform/omap/omap_hsmmc.0/by-name/radio	u:object_r:radio_device:s0
-/dev/block/platform/omap/omap_hsmmc.0/by-name/misc	u:object_r:tee_block_device:s0
+/dev/block/platform/omap/omap_hsmmc.0/by-name/dgs	u:object_r:tee_block_device:s0
 /dev/block/platform/omap/omap_hsmmc.0/by-name/efs	u:object_r:efs_block_device:s0

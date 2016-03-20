@@ -1,1 +1,1 @@
-init.misc_fs.		u:object_r:misc_fs_prop:s0
+init.tee_fs.		u:object_r:tee_fs_prop:s0

@@ -1,1 +1,1 @@
-type misc_fs_prop, property_type;
+type tee_fs_prop, property_type;

@@ -62,10 +62,9 @@ on boot
 
 on fs
     mkdir /factory 0775 radio radio
-    mkdir /misc 0770 drmrpc drmrpc
+    mkdir /tee 0770 drmrpc drmrpc
     mount_all /fstab.tuna
-    start misc_fs_setup
-    start tuna_setup
+    start tee_fs_setup
 
     # change permissions for mtd device
     chmod 0660 /dev/mtd/mtd0
@@ -262,7 +261,7 @@ service battery_charger /sbin/healthd -c
     critical
     seclabel u:r:healthd:s0
 
-service misc_fs_setup /system/vendor/bin/misc-fs-setup.sh
+service tee_fs_setup /system/vendor/bin/tee-fs-setup.sh
     class core
     user root
     group root
@@ -270,9 +269,16 @@ service misc_fs_setup /system/vendor/bin/misc-fs-setup.sh
     disabled
     oneshot
 
-on property:init.misc_fs.ready=true
+on property:init.tee_fs.ready=true
     start smc_pa_wvdrm
     start tf_daemon
+
+# Both tee_fs_setup and tuna_setup can perform reboots as
+# part of initialization, therefore we don't want them to
+# run simulataneously, otherwise we might end up in
+# partially initialized state.
+on property:init.svc.tee_fs_setup=stopped
+    start tuna_setup
 
 service tuna_setup /system/vendor/bin/tunasetup.sh
     class core
